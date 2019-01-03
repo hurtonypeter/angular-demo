@@ -5,14 +5,18 @@
       <th>Title</th>
       <th>In Stock</th>
       <th>Rating</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let book of books" [routerLink]="['/books', book.id]">
+    <tr *ngFor="let book of books">
       <td>{{ book.author }}</td>
       <td>{{ book.title }}</td>
       <td><span class="{{ book.inStock | booleanToFaicon }}"></span></td>
       <td><app-rating [rating]="book.rating"></app-rating></td>
+      <td><a [routerLink]="['/books', book.id]">details</a></td>
     </tr>
   </tbody>
 </table>
+
+<a routerLink="/">back to the main page</a>

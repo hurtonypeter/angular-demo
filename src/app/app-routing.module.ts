@@ -4,7 +4,7 @@ import { BooksModule } from './books/books.module';
 import { CoreModule } from './core/core.module';
 
 const routes: Routes = [
-  { path: '', loadChildren: () => CoreModule, pathMatch: 'full' },
+  { path: '', loadChildren: () => CoreModule },
   { path: 'books', loadChildren: () => BooksModule }
 ];
 
