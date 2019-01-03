@@ -1,0 +1,7 @@
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>Title:</strong> {{ book.title }}</p>
+<p><strong>Barcode:</strong> {{ book.barcode }}</p>
+<p><strong>Shelf:</strong> {{ book.shelf }}</p>
+<p><strong>Rating:</strong>&nbsp;<app-rating [rating]="book.rating" (clicked)="ratingClicked($event)"></app-rating></p>
+
+<a routerLink="/books">back to the list</a>

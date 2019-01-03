@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Author</th>
+      <th>Title</th>
+      <th>In Stock</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books" [routerLink]="['/books', book.id]">
+      <td>{{ book.author }}</td>
+      <td>{{ book.title }}</td>
+      <td><span class="{{ book.inStock | booleanToFaicon }}"></span></td>
+      <td><app-rating [rating]="book.rating"></app-rating></td>
+    </tr>
+  </tbody>
+</table>
