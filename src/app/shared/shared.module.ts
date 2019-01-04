@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { RatingComponent } from './components/rating/rating.component';
 import { BooleanToFaiconPipe } from './pipes/boolean-to-faicon.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,10 +12,12 @@ import { BooleanToFaiconPipe } from './pipes/boolean-to-faicon.pipe';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MatTableModule
   ],
   exports: [
     CommonModule,
+    FormsModule,
     MatTableModule,
     RatingComponent,
     BooleanToFaiconPipe

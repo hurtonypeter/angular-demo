@@ -6,7 +6,7 @@ import { BookListModel } from '../models/book-list.model';
   templateUrl: './book-list.page.component.html'
 })
 export class BookListPageComponent implements OnInit {
-
+  filter: string;
   books: BookListModel[];
 
   constructor(private booksApiClient: BooksApiClientService) { }
