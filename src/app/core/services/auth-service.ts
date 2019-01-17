@@ -12,22 +12,22 @@ const CURRENT_USER_KEY = 'currentUser';
 
 @Injectable()
 export class AuthService {
-    private _isAuthenticated: BehaviorSubject<boolean>;
-    private _currentUser: BehaviorSubject<IUserModel>;
+    private isAuthenticated: BehaviorSubject<boolean>;
+    private currentUser: BehaviorSubject<IUserModel>;
 
     constructor() {
         const currentUsername = localStorage.getItem(CURRENT_USER_KEY);
         const isAuthenticated = !!currentUsername;
-        this._isAuthenticated = new BehaviorSubject<boolean>(isAuthenticated);
-        this._currentUser = new BehaviorSubject<IUserModel>(isAuthenticated ? { username: currentUsername, roles: []} : null);
+        this.isAuthenticated = new BehaviorSubject<boolean>(isAuthenticated);
+        this.currentUser = new BehaviorSubject<IUserModel>(isAuthenticated ? { username: currentUsername, roles: []} : null);
     }
 
     get IsAuthenticated$(): Observable<boolean> {
-        return this._isAuthenticated.asObservable();
+        return this.isAuthenticated.asObservable();
     }
 
     get CurrentUser$(): Observable<IUserModel> {
-        return this._currentUser.asObservable();
+        return this.currentUser.asObservable();
     }
 
     login(username: string, password: string): boolean {
@@ -46,14 +46,14 @@ export class AuthService {
     }
 
     logout() {
-        this._isAuthenticated.next(false);
-        this._currentUser.next(null);
+        this.isAuthenticated.next(false);
+        this.currentUser.next(null);
         localStorage.removeItem(CURRENT_USER_KEY);
     }
 
     private loginUser(username: string) {
-        this._isAuthenticated.next(true);
-        this._currentUser.next({ username: username, roles: []});
+        this.isAuthenticated.next(true);
+        this.currentUser.next({ username: username, roles: []});
         localStorage.setItem(CURRENT_USER_KEY, username);
     }
     private getUsers(): User[] {

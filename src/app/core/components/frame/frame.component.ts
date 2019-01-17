@@ -24,7 +24,6 @@ export class FrameComponent {
         console.log('log container');
         console.log(this.container);
 
-
         console.log('log contentchild rating');
         console.log(this.ccRating);
     }

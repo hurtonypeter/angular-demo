@@ -27,15 +27,25 @@ export class BookListPageComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line:triple-equals
         distinctUntilChanged((x, y) => x == y),
         debounceTime(500),
-        tap(() => this.isLoading = true),
-        switchMap(() =>
-          this.booksApiClient.getBooks(this.filter).pipe(
-            map(result => this.books = result)
-          )
-        ),
-        tap(() => this.isLoading = false),
         takeUntil(this.destroy$))
-      .subscribe();
+      .subscribe(() => this.loadBooks());
+
+    // this.debouncer$
+    //   .pipe(
+    //     filter((x: string) => (x && x.length > 1) || !x),
+    //     // tslint:disable-next-line:triple-equals
+    //     distinctUntilChanged((x, y) => x == y),
+    //     debounceTime(500),
+    //     tap(() => this.isLoading = true),
+    //     switchMap(() =>
+    //       this.booksApiClient.getBooks(this.filter).pipe(
+    //         map(result => this.books = result)
+    //       )
+    //     ),
+    //     tap(() => this.isLoading = false),
+    //     takeUntil(this.destroy$))
+    //   .subscribe();
+    // this.debouncer$.next();
   }
 
   ngOnDestroy() {
