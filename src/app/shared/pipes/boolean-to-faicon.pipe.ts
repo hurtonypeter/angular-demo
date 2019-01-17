@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class BooleanToFaiconPipe implements PipeTransform {
 
   transform(value: boolean): string {
-    console.log('BooleanToFaiconPipe');
+    // console.log('BooleanToFaiconPipe');
     return value ? 'fa fa-check' : 'fa fa-times';
   }
 }

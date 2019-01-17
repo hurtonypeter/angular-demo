@@ -1,24 +1,37 @@
-<input type="text" [(ngModel)]="filter" /><br />
+<input type="text" [(ngModel)]="filter" (input)="debouncer$.next($event.target.value)" /><br />
 Filter: {{ filter }} <br />
-<table>
-  <thead>
-    <tr>
-      <th>Author</th>
-      <th>Title</th>
-      <th>In Stock</th>
-      <th>Rating</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let book of books">
-      <td>{{ book.author }}</td>
-      <td>{{ book.title }}</td>
-      <td><span class="{{ book.inStock | booleanToFaicon }}"></span></td>
-      <td><app-rating [rating]="book.rating"></app-rating></td>
-      <td><a [routerLink]="['/books', book.id]">details</a></td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-container">
+  <div class="table-loading-indicator" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Title</th>
+        <th>In Stock</th>
+        <th>Rating</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="!error; else errorRow">
+        <tr *ngFor="let book of books">
+          <td>{{ book.author }}</td>
+          <td>{{ book.title }}</td>
+          <td><span class="{{ book.inStock | booleanToFaicon }}"></span></td>
+          <td>
+            <app-rating [rating]="book.rating"></app-rating>
+          </td>
+          <td><a [routerLink]="['/books', book.id]">details</a></td>
+        </tr>
+      </ng-container>
 
-<a routerLink="/">back to the main page</a>
+      <ng-template #errorRow>
+        <tr>
+          <td colspan="5" style="text-align: center;">{{error}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>
