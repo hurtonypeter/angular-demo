@@ -1,4 +1,3 @@
-<input type="text" [(ngModel)]="filter" (input)="debouncer$.next($event.target.value)" /><br />
 Filter: {{ filter }} <br />
 <div class="table-container">
   <div class="table-loading-indicator" *ngIf="isLoading">
@@ -11,6 +10,17 @@ Filter: {{ filter }} <br />
         <th>Title</th>
         <th>In Stock</th>
         <th>Rating</th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>
+          <input type="text" [(ngModel)]="filter.author" (input)="debouncer$.next($event.target.value)" #filterField />
+        </th>
+        <th>
+          <input type="text" [(ngModel)]="filter.title" (input)="debouncer$.next($event.target.value)" #filterField />
+        </th>
+        <th></th>
+        <th></th>
         <th></th>
       </tr>
     </thead>

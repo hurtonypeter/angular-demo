@@ -5,6 +5,14 @@ import { BookDetailsModel } from '../models/book-details.model';
 import { delay } from 'rxjs/operators';
 import { listMock, detailsMocks } from './mock/fake-books-api-client.service';
 import { HttpClient } from '@angular/common/http';
+import { BookFilterModel } from '../models/book-filter.model';
+
+const bookfilter = (filter: BookFilterModel) => {
+  return (x: BookListModel): boolean => {
+    return ((filter.title && x.title.toLowerCase().indexOf(filter.title.toLowerCase()) !== -1) || !filter.title)
+        && ((filter.author && x.author.toLowerCase().indexOf(filter.author.toLowerCase()) !== -1) || !filter.author);
+  };
+};
 
 @Injectable()
 export class BooksApiClientService {
@@ -13,9 +21,9 @@ export class BooksApiClientService {
     private http: HttpClient
   ) { }
 
-  getBooks(filter: string): Observable<BookListModel[]> {
+  getBooks(filter: BookFilterModel): Observable<BookListModel[]> {
     const obs = filter
-      ? of(listMock.filter(x => x.title.toLowerCase().indexOf(filter.toLowerCase()) !== -1))
+      ? of(listMock.filter(bookfilter(filter)))
       : of(listMock);
     return obs.pipe(delay(500));
     // return throwError('vmi hiba');
