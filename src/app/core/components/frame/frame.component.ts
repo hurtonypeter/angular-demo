@@ -7,7 +7,7 @@ import { RatingComponent } from 'src/app/shared/components/rating/rating.compone
 })
 export class FrameComponent {
 
-    @ViewChild('container') container: ElementRef;
+    @ViewChild('cont') container: ElementRef;
 
     @ViewChildren(RatingComponent) ps: QueryList<RatingComponent>;
     @ViewChild(RatingComponent) vcRating: RatingComponent;
@@ -26,6 +26,10 @@ export class FrameComponent {
 
         console.log('log contentchild rating');
         console.log(this.ccRating);
+    }
+
+    clicked2(el: ElementRef) {
+        console.log(el);
     }
 
 }
