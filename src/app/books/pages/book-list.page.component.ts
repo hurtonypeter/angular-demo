@@ -1,23 +1,52 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { BooksApiClientService } from '../clients/books-api-client.service';
 import { BookListModel } from '../models/book-list.model';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, distinctUntilChanged, filter, switchMap, map, catchError, tap } from 'rxjs/operators';
+import { Subject, fromEvent, forkJoin, merge as c_merge } from 'rxjs';
+import { debounceTime, takeUntil, distinctUntilChanged, filter, switchMap, map, catchError, tap, merge } from 'rxjs/operators';
+import { BookFilterModel } from '../models/book-filter.model';
 
 @Component({
   templateUrl: './book-list.page.component.html'
 })
-export class BookListPageComponent implements OnInit, OnDestroy {
+export class BookListPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   destroy$ = new Subject();
   debouncer$ = new Subject<string>();
 
   error: string | null = null;
   isLoading = true;
-  filter: string;
+  filter: BookFilterModel = {};
   books: BookListModel[];
 
+  @ViewChildren('filterField') filterFields: QueryList<ElementRef>;
+
   constructor(private booksApiClient: BooksApiClientService) { }
+
+  ngAfterViewInit(): void {
+
+    const fields = this.filterFields.map(f => f.nativeElement);
+
+    fromEvent(fields, 'input')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(x => console.log('i'));
+
+
+    // fromEvent(fields[0], 'input')
+    //   .pipe(
+    //     merge(fromEvent(fields[1], 'input')),
+    //     takeUntil(this.destroy$)
+    //   )
+    //   .subscribe(x => console.log('merge'));
+
+
+    // const o1 = fromEvent(fields[0], 'input');
+    // const o2 = fromEvent(fields[1], 'input');
+    // c_merge(o1, o2)
+    //   .pipe(
+    //     takeUntil(this.destroy$)
+    //   )
+    //   .subscribe(x => console.log('forkjoin'));
+  }
 
   ngOnInit() {
     this.loadBooks();
