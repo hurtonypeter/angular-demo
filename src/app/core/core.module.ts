@@ -13,6 +13,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './components/login/login.component';
 import { FrameComponent } from './components/frame/frame.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CdDemoPageComponent } from './pages/cd-demo.page.component';
+import { DemoComponent } from './components/demo/demo.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { AuthGuard } from './guards/auth.guard';
     MenuComponent,
     LayoutComponent,
     LoginComponent,
-    FrameComponent
+    FrameComponent,
+    CdDemoPageComponent,
+    DemoComponent
   ],
   imports: [
     SharedModule,
