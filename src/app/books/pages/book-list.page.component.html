@@ -1,4 +1,5 @@
-Filter: {{ filter }} <br />
+Filter: <pre>{{ filter | json }} </pre><br />
+<a mat-raised-button routerLink="/books/create">Create</a>
 <div class="table-container">
   <div class="table-loading-indicator" *ngIf="isLoading">
     <mat-spinner></mat-spinner>
@@ -33,7 +34,10 @@ Filter: {{ filter }} <br />
           <td>
             <app-rating [rating]="book.rating"></app-rating>
           </td>
-          <td><a [routerLink]="['/books', book.id]">details</a></td>
+          <td>
+            <a [routerLink]="['/books', book.id]" mat-raised-button>details</a> 
+            <a [routerLink]="['/books', book.id, 'edit']" mat-raised-button>edit</a>
+          </td>
         </tr>
       </ng-container>
 

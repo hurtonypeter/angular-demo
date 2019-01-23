@@ -54,8 +54,7 @@ export class BookListPageComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(
         filter((x: string) => (x && x.length > 1) || !x),
         debounceTime(500),
-        // tslint:disable-next-line:triple-equals
-        distinctUntilChanged((x, y) => x == y),
+        distinctUntilChanged((x, y) => x === y),
         takeUntil(this.destroy$))
       .subscribe(() => this.loadBooks());
 

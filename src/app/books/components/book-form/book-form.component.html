@@ -1,0 +1,27 @@
+<form [formGroup]="bookForm">
+  <mat-form-field>
+    <input matInput placeholder="Barcode" formControlName="barcode">
+    <mat-error *ngIf="(bookForm.get('barcode').dirty || bookForm.get('barcode').touched) && bookForm.get('barcode').hasError('required')">
+      Barcode is required
+    </mat-error>
+    <mat-error *ngIf="(bookForm.get('barcode').dirty || bookForm.get('barcode').touched) && bookForm.get('barcode').hasError('barcode')">
+      {{ bookForm.get('barcode').getError('barcode').message }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Author" formControlName="author">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Title" formControlName="title">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Shelf" formControlName="shelf">
+  </mat-form-field>
+  <mat-checkbox formControlName="inStock">I'm a checkbox</mat-checkbox>
+
+  <br />
+  <div>
+    <button mat-button (click)="cancel.emit()">Cancel</button>
+    <button mat-button (click)="save.emit(bookForm.value)">Save</button>
+  </div>
+</form>

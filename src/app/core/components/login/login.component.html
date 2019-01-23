@@ -3,8 +3,11 @@
     <div>
         <mat-form-field>
             <input matInput type="text" placeholder="Username" name="username" [(ngModel)]="username" required #name="ngModel" />
-            <mat-error *ngIf="name.dirty || name.touched">
+            <mat-error *ngIf="(name.dirty || name.touched) && name.hasError('required')">
                 Username is required
+            </mat-error>
+            <mat-error *ngIf="(name.dirty || name.touched) && name.hasError('barcode')">
+                Username should be a barcode :"D
             </mat-error>
         </mat-form-field>
         <br />
