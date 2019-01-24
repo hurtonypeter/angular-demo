@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BooksApiClientService } from '../clients/books-api-client.service';
 import { ActivatedRoute } from '@angular/router';
 import { BookDetailsModel } from '../models/book-details.model';
+import { fadeInAnimation } from 'src/app/utils/fade-in-animation';
 
 @Component({
-  templateUrl: './book-details.page.component.html'
+  templateUrl: './book-details.page.component.html',
+  animations: [fadeInAnimation]
 })
 export class BookDetailsPageComponent implements OnInit {
 

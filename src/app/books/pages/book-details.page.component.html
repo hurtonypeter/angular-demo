@@ -1,4 +1,4 @@
-<div *ngIf="book; else loading">
+<div *ngIf="book; else loading" @fadeIn>
     <a [routerLink]="['/books', book.id, 'edit']" mat-raised-button>Edit book</a>
     <p><strong appHighlighter>Author:</strong> {{ book.author }}</p>
     <p><strong appHighlighter>Title:</strong> {{ book.title }}</p>

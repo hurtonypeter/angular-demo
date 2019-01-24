@@ -15,6 +15,7 @@ import { FrameComponent } from './components/frame/frame.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CdDemoPageComponent } from './pages/cd-demo.page.component';
 import { DemoComponent } from './components/demo/demo.component';
+import { AnimDemoPageComponent } from './pages/anim-demo.page.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DemoComponent } from './components/demo/demo.component';
     LoginComponent,
     FrameComponent,
     CdDemoPageComponent,
-    DemoComponent
+    DemoComponent,
+    AnimDemoPageComponent
   ],
   imports: [
     SharedModule,
