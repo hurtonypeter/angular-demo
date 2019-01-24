@@ -1,8 +1,20 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { BooksApiClientService } from '../clients/books-api-client.service';
 import { BookListModel } from '../models/book-list.model';
-import { Subject, fromEvent, forkJoin, merge as c_merge } from 'rxjs';
-import { debounceTime, takeUntil, distinctUntilChanged, filter, switchMap, map, catchError, tap, merge } from 'rxjs/operators';
+import { Subject, fromEvent, merge as c_merge, Observable, from } from 'rxjs';
+import {
+  debounceTime,
+  takeUntil,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  map,
+  catchError,
+  tap, merge,
+  finalize,
+  share,
+  publish
+} from 'rxjs/operators';
 import { BookFilterModel } from '../models/book-filter.model';
 
 @Component({
@@ -27,8 +39,10 @@ export class BookListPageComponent implements OnInit, OnDestroy, AfterViewInit {
     const fields = this.filterFields.map(f => f.nativeElement);
 
     fromEvent(fields, 'input')
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(x => console.log('i'));
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(x => console.log('simple'));
 
 
     // fromEvent(fields[0], 'input')
@@ -36,7 +50,7 @@ export class BookListPageComponent implements OnInit, OnDestroy, AfterViewInit {
     //     merge(fromEvent(fields[1], 'input')),
     //     takeUntil(this.destroy$)
     //   )
-    //   .subscribe(x => console.log('merge'));
+    //   .subscribe(x => console.log('merge with one'));
 
 
     // const o1 = fromEvent(fields[0], 'input');
@@ -45,7 +59,29 @@ export class BookListPageComponent implements OnInit, OnDestroy, AfterViewInit {
     //   .pipe(
     //     takeUntil(this.destroy$)
     //   )
-    //   .subscribe(x => console.log('forkjoin'));
+    //   .subscribe(x => console.log('multi-merge'));
+
+    // // cold
+    const obs = new Observable<number>((observer) => {
+      observer.next(Math.random());
+      return () => { };
+    });
+
+    // // hot
+    // const random = Math.random();
+    // const obs = new Observable<number>((observer) => {
+    //   observer.next(random);
+    //   return () => { };
+    // });
+
+    obs.subscribe(val => console.log('from subscription1: ', val));
+    obs.subscribe(val => console.log('from subscription2: ', val));
+
+    // const promise = new Promise<number>((resolve, reject) => {
+    //   resolve(Math.random());
+    // });
+    // const obsFromPromise = from(promise);
+    // obsFromPromise.subscribe(val => console.log('from promise: ', val));
   }
 
   ngOnInit() {
@@ -61,16 +97,16 @@ export class BookListPageComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.debouncer$
     //   .pipe(
     //     filter((x: string) => (x && x.length > 1) || !x),
-    //     // tslint:disable-next-line:triple-equals
-    //     distinctUntilChanged((x, y) => x == y),
     //     debounceTime(500),
+    //     distinctUntilChanged((x, y) => x === y),
     //     tap(() => this.isLoading = true),
     //     switchMap(() =>
     //       this.booksApiClient.getBooks(this.filter).pipe(
-    //         map(result => this.books = result)
+    //         map(result => this.books = result),
+    //         catchError(error => this.error = error)
     //       )
     //     ),
-    //     tap(() => this.isLoading = false),
+    //     finalize(() => this.isLoading = false),
     //     takeUntil(this.destroy$))
     //   .subscribe();
     // this.debouncer$.next();

@@ -1,18 +1,20 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
   templateUrl: './demo.component.html',
   styleUrls: ['./demo.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DemoComponent implements OnInit {
+export class DemoComponent {
 
   @Input() model: any;
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  update(): void {
+    // console.log(this.model);
+    this.cd.markForCheck();
   }
 
 }
